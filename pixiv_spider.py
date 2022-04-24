@@ -2,21 +2,26 @@ import requests
 from fake_useragent import UserAgent
 import json
 import time
+import os
 requests.adapters.DEFAULT_RETRIES = 5
+
+# file_path = "/hhh"
+# if not os.path.exists(file_path):
+#     os.mkdir(file_path)
 
 
 proxies = {
-    "http": "47.92.234.75:80",
-    "https": "47.92.234.75:80"
+    "http": "120.71.147.244:8901",
+    "https": "120.71.147.244:8901"
 }
 
-ID = "30798372"
+ID = "2188232"
 UA = UserAgent()
 
 
 def get_word_id(id):
     # url = f"https://www.pixiv.net/ajax/user/{id}/profile/top?lang=zh"
-    url = "https://www.pixiv.net/ajax/user/30798372/profile/illusts?ids[]=96030798&ids[]=95937343&ids[]=95839883&ids[]=95640276&ids[]=95552176&ids[]=95226443&ids[]=95097468&ids[]=94993442&ids[]=94862458&ids[]=94764370&ids[]=94695449&ids[]=94675363&ids[]=94595786&ids[]=94416460&ids[]=94353435&ids[]=94240279&ids[]=94116154&ids[]=94051100&ids[]=93902328&ids[]=93793130&ids[]=93596716&ids[]=93491943&ids[]=93428367&ids[]=93271963&ids[]=93180775&ids[]=93110610&ids[]=92943203&ids[]=92843233&ids[]=92651899&ids[]=92563950&ids[]=92334153&ids[]=92162063&ids[]=92041912&ids[]=91985550&ids[]=91928798&ids[]=91904912&ids[]=91801332&ids[]=91710078&ids[]=91523952&ids[]=91450625&ids[]=91383673&ids[]=91268564&ids[]=91184024&ids[]=91108954&ids[]=91063873&ids[]=90993069&ids[]=90859865&ids[]=90807573&work_category=illustManga&is_first_page=1&lang=zh"    # headers = {
+    url = "https://www.pixiv.net/ajax/user/2188232/profile/illusts?ids%5B%5D=53758179&ids%5B%5D=53643448&ids%5B%5D=53551654&ids%5B%5D=53275453&ids%5B%5D=53186325&ids%5B%5D=53003270&ids%5B%5D=52870588&ids%5B%5D=52495727&ids%5B%5D=52452497&ids%5B%5D=52098226&ids%5B%5D=51806057&ids%5B%5D=51739709&ids%5B%5D=51664160&ids%5B%5D=51531779&ids%5B%5D=51420765&ids%5B%5D=51331207&ids%5B%5D=51237302&ids%5B%5D=51217728&ids%5B%5D=51214025&ids%5B%5D=51166367&ids%5B%5D=51068746&ids%5B%5D=51040304&ids%5B%5D=45981451&ids%5B%5D=44745753&ids%5B%5D=43393846&ids%5B%5D=42754259&ids%5B%5D=42714955&work_category=illustManga&is_first_page=0&lang=zh"
     #     "authority": "www.pixiv.net",
     #     "method": "GET",
     #     "path": f"/ajax/user/{id}/profile/all?lang=zh",
@@ -30,7 +35,7 @@ def get_word_id(id):
                'sec-fetch-mode': 'no-cors',
                'sec-fetch-site': 'cross-site',
                'user-agent': UA.random,
-               "cookie": "first_visit_datetime_pc=2021-10-30+18:59:27; p_ab_id=1; p_ab_id_2=3; p_ab_d_id=1903733820; yuid_b=F5FpQoY; _ga=GA1.2.857176263.1635587969; c_type=20; privacy_policy_notification=0; a_type=0; b_type=1; privacy_policy_agreement=3; __utma=235335808.857176263.1635587969.1635587969.1635949138.2; __utmz=235335808.1635949138.2.2.utmcsr=google|utmccn=(organic)|utmcmd=organic|utmctr=(not provided); login_ever=yes; __utmv=235335808.|2=login ever=yes=1^3=plan=normal=1^5=gender=male=1^6=user_id=66993514=1^9=p_ab_id=1=1^10=p_ab_id_2=3=1^11=lang=zh=1; ki_r=; ki_s=214908:0.0.0.0.2;214994:0.0.0.0.2;215190:0.0.0.0.2;220959:0.0.0.0.0; ki_t=1635588633465;1638080371463;1638080869736;5;29; PHPSESSID=66993514_b4PCaOU5fDdVV1gBKXezFzpWL2Vhb5xw; _gid=GA1.2.1631022672.1644494907; tag_view_ranking=Lt-oEicbBr~Ie2c51_4Sp~tgP8r-gOe_~RTJMXD26Ak~WVrsHleeCL~faHcYIP1U0~qtVr8SCFs5~Cc23GhmKNc~MC7yWU3YNW~9euyrr7oFl~FPCeANM2Bm~d9UpgqVAEz~pnCQRVigpy~DnmTE3Ec_I~RcahSSzeRf~0xsDLqCEW6~fg8EOt4owo~_EOd7bsGyl~X_1kwTzaXt~tzVOnrUz79~WDrRVlrKKs~7xMlE4CR3t~QaiOjmwQnI~UUZM6DRRvj~L36Q8o7i1e~txZ9z5ByU7~gpglyfLkWs~I-1xQGtn3G~ePN3h1AXKX~skx_-I2o4Y~ETjPkL0e6r~w7XDmF76rR~Ysf6p9hInm~YRDwjaiLZn~ziiAzr_h04~7-cdu1A0eA~bvp7fCUKNH~cFXtS-flQO~x_jB0UM4fe~BSlt10mdnm~IJkCuj9g6o~O2wfZxfonb~-oNVOx_K96~kZOrpQ0eOB~Wxk4MkYNNf~L7-FiupSjg~92z8RZmGQ6~kjfJ5uXq4m~RokSaRBUGr~jH0uD88V6F~BF2N4eoz_h~3Nx8WodkHF~5BQyNoZRWM~4N9NZ-TX3-~MSNRmMUDgC~ahO2xG1BUq~VMq-Vxsw8k~EUwzYuPRbU~JN2fNJ_Ue2~K8esoIs2eW~F-NKdmzAvA~CE4z81uaLD~OEIVtzPpB3~TEO656gSAo~Hn9qFX8COa~h_1FuDI5Nc~NJOmwtpQWD~-2AUmsDqzZ~0bNd1-hq-i~0YMUbkKItS~6QCMLTzs96~0oMmMHTqle~33kJYz6eWM~vYl0bVLhWW~I8DVKb4T8n~C7XTvPBYbD~PHQDP-ccQD~SGMAKY7jRo~YnvQJpeepV~IAswHyJ5H0~cofmB2mV_d~qnRhxi44Zq~ISKZqyBIeT~O64_t9evHE~awkRdldPOb~voBUJlwwSH~Q91GJOmVbQ~e2yEFDVXjZ~26-Sd3V3Py~nTjTRvH_ca~w54SU6Xx_L~gy4M_SbRJV~HrQjOxea1_~SzbEMY4eCb~pzzjRSV6ZO~CrFcrMFJzz~riCSPqp89S~LJo91uBPz4~I5npEODuUW~PGh9Qwfchx; __cf_bm=GBhkdm4MNqZ7265oxWw6xM_rM.0hFJJnxMJfew0LFjM-1644510939-0-AYVIN22gMi6WNzVQQt2MqB+fRgxad+7ERMepoaeXAA7a/YktCqksSv1PbhcquGaHPTEkhKDmDrrLx6eOZBa7uPZqhqjpOMAkZrvPZIO86mEyeXGWAFS70yBGZrHjbE0MoDsUMUXKOeKD06xdmPnQZDx2Va96UEynuwFRwPlsyByGjDgkFZAxbgqqQ3JVvruYkg==; QSI_S_ZN_5hF4My7Ad6VNNAi=r:10:21"
+               "cookie": "first_visit_datetime_pc=2021-10-30+18%3A59%3A27; p_ab_id=1; p_ab_id_2=3; p_ab_d_id=1903733820; yuid_b=F5FpQoY; _ga=GA1.2.857176263.1635587969; c_type=20; privacy_policy_notification=0; a_type=0; b_type=1; privacy_policy_agreement=3; __utma=235335808.857176263.1635587969.1635587969.1635949138.2; __utmz=235335808.1635949138.2.2.utmcsr=google|utmccn=(organic)|utmcmd=organic|utmctr=(not%20provided); login_ever=yes; __utmv=235335808.|2=login%20ever=yes=1^3=plan=normal=1^5=gender=male=1^6=user_id=66993514=1^9=p_ab_id=1=1^10=p_ab_id_2=3=1^11=lang=zh=1; ki_r=; ki_s=214908%3A0.0.0.0.2%3B214994%3A0.0.0.0.2%3B215190%3A0.0.0.0.2%3B220959%3A0.0.0.0.0; ki_t=1635588633465%3B1638080371463%3B1638080869736%3B5%3B29; PHPSESSID=66993514_b4PCaOU5fDdVV1gBKXezFzpWL2Vhb5xw; _gid=GA1.2.1980262300.1648703166; QSI_S_ZN_5hF4My7Ad6VNNAi=r:10:25; tag_view_ranking=Lt-oEicbBr~tgP8r-gOe_~Ie2c51_4Sp~faHcYIP1U0~RcahSSzeRf~WVrsHleeCL~_EOd7bsGyl~RTJMXD26Ak~QaiOjmwQnI~0xsDLqCEW6~pnCQRVigpy~MSNRmMUDgC~DnmTE3Ec_I~qtVr8SCFs5~X_1kwTzaXt~Cc23GhmKNc~MC7yWU3YNW~9euyrr7oFl~FPCeANM2Bm~d9UpgqVAEz~HY55MqmzzQ~JooW_Hne2Q~y3NlVImyly~pzzjRSV6ZO~jH0uD88V6F~ziiAzr_h04~azESOjmQSV~BSlt10mdnm~OYl5wlor4w~txZ9z5ByU7~qnGN-oHRQo~UnI8eZzpBM~KrMg4c4zFf~Ui7_qOnwP5~CrFcrMFJzz~ETjPkL0e6r~NgIJwXbXYc~SVCXbGp5Sf~fg8EOt4owo~tg4cf2wCF6~KN7uxuR89w~bfM8xJ-4gy~-StjcwdYwv~5oPIfUbtd6~yREQ8PVGHN~gpglyfLkWs~30YRghWWsb~28gdfFXlY7~y8GNntYHsi~BU9SQkS-zU~62FPd2uRc6~xha5FQn_XC~HpnacYZr6z~skx_-I2o4Y~wmxKAirQ_H~tzVOnrUz79~WDrRVlrKKs~7xMlE4CR3t~UUZM6DRRvj~_RfiUqtsxe~rqnJSF7cpq~9OgM5t9f0L~48UjH62K37~q303ip6Ui5~yv-MdmoUJ0~O2wfZxfonb~fIMPtFR8GH~-mS39rlV30~PzEXgc_S56~9Gbahmahac~LtW-gO6CmS~mzJgaDwBF5~ZTBAtZUDtQ~K8esoIs2eW~DpYZ-BAzxm~hW_oUTwHGx~eVxus64GZU~4TDL3X7bV9~L36Q8o7i1e~I-1xQGtn3G~ePN3h1AXKX~w7XDmF76rR~iFIin44D8E~H8dBmnNhw6~NsbQEogeyL~aSdrnGinfC~jpIZPQ502H~CiSfl_AE0h~gFv6cfMyax~cuImfsdRMn~OqJHdm3tOZ~zcgN5vmPI2~Bd2L9ZBE8q~t2K257LiKY~TqiZfKmSCg~aA2ODQ1ACf~rNs-bh_gk3~-NJZeKTYP8~xXhWS_7AGn~EUwzYuPRbU; __cf_bm=MMfsKkXVQfqKzZaLqX2KUgqmKxxe7qRrhDadHo0BLrU-1648736067-0-AQZ8kdbwC3Rjv9htJTk0d2drIYSdo9DGykrOcH/ZXCKp0nGRWNqrFxzKqZwxrqiUYMm8BZ2Ab/JuCLIJSFa3FlIgP50WgUZYvh+QOeLrFoaxUvR8c8uhWXrQJdiNi4nbizOy0HsRYjnoNRIW6ad09HIOzxPChRyOEd1BtGC1xS29X9l/pf0GR0mdyruKgVbsdQ=="
                }
     r = requests.get(url, headers=headers)
     k = list(r.json()["body"]["works"].keys())

@@ -52,12 +52,68 @@ class IpPool:
     # 执行函数
     def crawl(self):
         # 这里只获取前100页提供的免费代理IP测试
-        for i in range(1, 100):
+        for i in range(1, 150):
             page_url = self.url.format(i)
             time.sleep(random.randint(1, 2))  # 控制抓取频率
             self.get_proxy(url=page_url)
 
+    def test(self):
+        with open("ip_pool.txt", "r") as f:
+            print("正在读取已有ip")
+            for proxy in f.readlines():
+                proxy = proxy.strip()
+                proxies = {
+                    'http': 'http://{}'.format(proxy),
+                    'https': 'https://{}'.format(proxy),
+                }
+                try:
+                    resp = requests.get(
+                        url=self.test_url, proxies=proxies, headers=self.headers, timeout=10)
+
+                    if resp.status_code == 200:
+                        print(proxy, "\033[31m可用\033[0m")
+                    else:
+                        print(proxy, '不可用')
+                except Exception as e:
+                    print(proxy, '不可用')
+
+
+class ip_pool:
+    def __init__(self):
+        self.ips = []
+        self.test_url = "http://www.baidu.com/"
+        self.headers = {
+            'User-Agent': UserAgent(verify_ssl=False).random
+        }
+        with open("ip_pool.txt", "r") as f:
+            print("正在读取已有ip")
+            for proxy in f.readlines():
+                proxy = proxy.strip()
+                proxies = {
+                    'http': 'http://{}'.format(proxy),
+                    'https': 'https://{}'.format(proxy),
+                }
+                try:
+                    resp = requests.get(
+                        url=self.test_url, proxies=proxies, headers=self.headers, timeout=10)
+
+                    if resp.status_code == 200:
+                        print(proxy, "\033[31m可用\033[0m")
+                        self.ips.append(proxy)
+                    else:
+                        print(proxy, '不可用')
+                except Exception as e:
+                    print(proxy, '不可用')
+
+    def random_ip(self):
+        return random.choice(self.ips)
+
 
 if __name__ == '__main__':
+    # ip = ip_pool()
+    # print(ip.random_ip())
+    # print(ip.random_ip())
+    # print(ip.random_ip())
+    # print(ip.random_ip())
     ip = IpPool()
     ip.crawl()
